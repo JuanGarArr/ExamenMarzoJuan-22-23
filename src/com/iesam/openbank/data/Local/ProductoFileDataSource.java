@@ -1,9 +1,9 @@
-package com.iesam.openbank.data;
-
+package com.iesam.openbank.data.Local;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.iesam.openbank.domain.models.Demo;
+import com.iesam.openbank.domain.models.Producto;
+import com.iesam.openbank.domain.models.Transaccion;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -15,28 +15,28 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
-public class DemoFileDataSource {
+public class ProductoFileDataSource {
 
-    private String nameFile = "demo.txt";
+    private String ProductoFileDataSource = "Producto.txt";
 
     private Gson gson = new Gson();
 
-    private final Type typeList = new TypeToken<ArrayList<Demo>>() {
+    private final Type typeList = new TypeToken<ArrayList<Producto>>() {
     }.getType();
 
-    public void save(Demo model) {
-        List<Demo> models = findAll();
+    public void save(Producto model) {
+        List<Producto> models = findAll();
         models.add(model);
         saveToFile(models);
     }
 
-    public void saveList(List<Demo> models) {
+    public void saveList(List<Producto> models) {
         saveToFile(models);
     }
 
-    private void saveToFile(List<Demo> models) {
+    private void saveToFile(List<Producto> models) {
         try {
-            FileWriter myWriter = new FileWriter(nameFile);
+            FileWriter myWriter = new FileWriter(ProductoFileDataSource);
             myWriter.write(gson.toJson(models));
             myWriter.close();
             System.out.println("Datos guardados correctamente");
@@ -47,19 +47,19 @@ public class DemoFileDataSource {
     }
 
 
-    public Demo findById(Integer id) {
-        List<Demo> models = findAll();
-        for (Demo model : models) {
-            if (Objects.equals(model.getId(), id)) {
+    public Producto findById(Integer id) {
+        List<Producto> models = findAll();
+        for (Producto model : models) {
+            if (Objects.equals(model.getCod(), id)) {
                 return model;
             }
         }
         return null;
     }
 
-    public List<Demo> findAll() {
+    public List<Producto> findAll() {
         try {
-            File myObj = new File(nameFile);
+            File myObj = new File(ProductoFileDataSource);
             if (!myObj.exists()) {
                 myObj.createNewFile();
             }
@@ -81,10 +81,10 @@ public class DemoFileDataSource {
     }
 
     public void delete(Integer modelId) {
-        List<Demo> newList = new ArrayList<>();
-        List<Demo> models = findAll();
-        for (Demo model : models) {
-            if (model.getId() != modelId) {
+        List<Producto> newList = new ArrayList<>();
+        List<Producto> models = findAll();
+        for (Producto model : models) {
+            if (model.getCod() != modelId) {
                 newList.add(model);
             }
         }
